@@ -2,15 +2,16 @@ const router = require('express').Router();
 
 const Tracks = require('./tracks-model.js');
 
-router.get('/', async (req, res) => {
-    try {
-        const tracks = await Tracks.find();
-        res.status(200).json(tracks);
-    } catch (error) {
-        res
-            .status(500)
-            .json({ message: 'We ran into an error retrieving the tracks' });
-    }
+router.get('/', (req, res) => {
+    Tracks.find()
+        .then(tracks => {
+            res.status(200).json(tracks);
+        })
+        .catch(error => {
+            res
+                .status(500)
+                .json({ message: 'We ran into an error retrieving the tracks' });
+        });
 });
 
 router.get('/:id', async (req, res) => {
