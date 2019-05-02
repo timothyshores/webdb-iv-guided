@@ -8,8 +8,14 @@ module.exports = {
     migrations: {
         directory: './data/migrations'
     },
-        seeds: {
+    seeds: {
         directory: './seeds/migrations'        
+    },
+    // Forces SQLite to enforce foreign keys
+    pool: {
+        afterCreate: (connection, done) => {
+            connection.run('PRAGMA foreign_keys = ON', done)
+        }
     }
   },
 };
